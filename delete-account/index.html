@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'; script-src 'sha256-3meLzQDqThx3d1mYfE3sM/IlNgUmy6eikvookYwgr28='; connect-src https://svsaysljosrrqbjaxlqv.supabase.co">
+<link rel="icon" href="data:,">
+<title>Видалення акаунта — Попутка. Таксі разом | Київ</title>
+<style>:root{color-scheme:light dark;--bg:#F6F6F1;--paper:#FFF;--ink:#173E38;--muted:#74817C;--line:#E3E8E2;--green:#235D4C;--pale:#E8F1E8;--danger:#AD5044;--on:#FFF}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--paper:#1E1E1E;--ink:#F1F1F1;--muted:#AAA;--line:#333;--green:#88D6B8;--pale:#282828;--danger:#EA998A;--on:#121212}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:26px;letter-spacing:-.5px;margin:12px 0 4px}h2{font-size:17px;margin:0 0 4px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
+.card>:first-child{margin-top:0}.card>:last-child{margin-bottom:0}
+.muted{color:var(--muted);font-size:13px}nav{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0}
+a{color:var(--green);font-weight:600}section+section{margin-top:14px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 6px}
+input{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:inherit}
+button{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:14px;font:600 15px system-ui,sans-serif;cursor:pointer;background:var(--green);color:var(--on)}
+button.secondary{background:var(--pale);color:var(--ink)}button.danger{background:var(--danger);color:var(--on)}button:disabled{opacity:.55;cursor:default}
+.error{color:var(--danger)}[hidden]{display:none!important}</style>
+</head>
+<body>
+<main>
+<header><strong>Попутка. Таксі разом | Київ</strong><a href="/kyiv-ride/en/delete-account/">English</a></header>
+<nav><a href="/kyiv-ride/">Підтримка</a><a href="/kyiv-ride/privacy/">Конфіденційність</a><a href="/kyiv-ride/terms/">Умови</a><a href="/kyiv-ride/delete-account/">Видалення акаунта</a></nav>
+<h1>Видалення акаунта</h1>
+<div class="card"><p>У застосунку: Профіль → Налаштування → «Допомога та дані» → «Видалити акаунт».</p><p>Якщо не вдається увійти, напиши з пошти акаунта на адресу підтримки з темою «Видалення акаунта». Ми видалимо акаунт після перевірки, що запит надіслано з цієї пошти. <a href="mailto:tiroeson4@gmail.com">tiroeson4@gmail.com</a></p></div>
+<div class="card"><p>Буде видалено твій профіль, фото, контакти, обрані місця, створені поїздки та повідомлення. Особисті переписки з тобою зникнуть також у співрозмовників. Активні поїздки скасуються, з інших ти вийдеш. Анонімний відгук без прив’язки до акаунта може залишитися.</p>
+<p>Знеособлені щоденні лічильники статистики без зв’язку з акаунтом зберігаються.</p>
+<p class="muted">Видалення акаунта не скасовує підписку магазину. Якщо вона є, скасуй її в Google Play або App Store, щоб уникнути наступного списання.</p></div>
+<div class="card" id="deletion">
+<noscript><p>Для входу на цій сторінці потрібен JavaScript. Також можна написати на пошту підтримки.</p></noscript>
+<form id="login" hidden>
+<p>Без застосунку: увійди нижче поштою та паролем акаунта й підтверди видалення.</p>
+<label for="email">Пошта</label><input id="email" type="email" autocomplete="username" required maxlength="254">
+<label for="password">Пароль</label><input id="password" type="password" autocomplete="current-password" required maxlength="128">
+<button type="submit">Увійти</button>
+
+</form>
+<div id="confirm" hidden>
+<p class="muted">Вхід виконано: <span id="who"></span></p>
+<p>Дані та переписки неможливо буде відновити. Точно видалити акаунт?</p>
+<button type="button" class="danger" id="remove">Видалити назавжди</button>
+<button type="button" class="secondary" id="signout">Вийти</button>
+</div>
+<p id="status" role="status" aria-live="polite"></p>
+</div>
+<p class="muted">Андрій Офат · <a href="mailto:tiroeson4@gmail.com">tiroeson4@gmail.com</a></p>
+</main>
+<script>(()=>{const c={"url":"https://svsaysljosrrqbjaxlqv.supabase.co","key":"sb_publishable_r02QtHizBKFx479t2BNy4g_VLujt2au","messages":{"credentials":"Перевір пошту та пароль і спробуй ще раз.","email":"Введи коректну адресу пошти.","unavailable":"Не вдалося підтвердити запит. Перевір з’єднання та спробуй ще раз.","admin":"Спершу передай права адміністратора іншому акаунту, щоб застосунок не залишився без модератора.","deleted":"Твій акаунт видалено.","deletionAccepted":"Запит прийнято. Доступ до акаунта закрито; сервер завершує видалення даних. Повторювати запит не потрібно.","loading":"Завантаження…"},"redirect":"https://tiroeson4.github.io/kyiv-ride/delete-account/"};
+const $=(id)=>document.getElementById(id),login=$("login"),confirmBox=$("confirm"),status=$("status");
+let token="",requestId=crypto.randomUUID(),busy=false;
+const say=(key,error)=>{status.textContent=c.messages[key]||"";status.className=error?"error":""};
+const headers=(auth)=>({apikey:c.key,"Content-Type":"application/json",...(auth?{Authorization:"Bearer "+auth}:{})});
+async function show(access){const r=await fetch(c.url+"/auth/v1/user",{headers:headers(access)});if(!r.ok)throw 0;const user=await r.json();token=access;$("who").textContent=user.email||"";login.hidden=true;confirmBox.hidden=false;say("")}
+function reset(){token="";requestId=crypto.randomUUID();confirmBox.hidden=true;login.hidden=false}
+const hash=new URLSearchParams(location.hash.slice(1));
+if(location.hash)history.replaceState(null,"",location.pathname);
+if(hash.get("access_token"))show(hash.get("access_token")).catch(()=>{reset();say("unavailable",true)});else login.hidden=false;
+login.addEventListener("submit",async(e)=>{e.preventDefault();if(busy)return;const email=$("email").value.trim().toLowerCase(),password=$("password").value;
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return say("email",true);busy=true;say("loading");
+try{const r=await fetch(c.url+"/auth/v1/token?grant_type=password",{method:"POST",headers:headers(),body:JSON.stringify({email,password})});
+if(r.status===400||r.status===401){say("credentials",true);return}if(!r.ok)throw 0;const s=await r.json();$("password").value="";await show(s.access_token)}
+catch{say("unavailable",true)}finally{busy=false}});
+const google=$("google");if(google)google.addEventListener("click",()=>{location.assign(c.url+"/auth/v1/authorize?provider=google&redirect_to="+encodeURIComponent(c.redirect))});
+$("signout").addEventListener("click",()=>{const old=token;reset();say("");fetch(c.url+"/auth/v1/logout",{method:"POST",headers:headers(old)}).catch(()=>{})});
+$("remove").addEventListener("click",async()=>{if(busy||!token)return;busy=true;$("remove").disabled=true;say("loading");
+try{const r=await fetch(c.url+"/functions/v1/delete-account",{method:"POST",headers:headers(token),body:JSON.stringify({requestId})});
+const body=await r.json().catch(()=>({}));if(r.ok&&(body.code==="deleted"||body.code==="deletionAccepted")){token="";confirmBox.hidden=true;say(body.code);return}
+if(body.code==="login"){reset();say("credentials",true);return}say(body.code==="deletionAdmin"?"admin":"unavailable",true)}
+catch{say("unavailable",true)}finally{busy=false;$("remove").disabled=false}});})();</script>
+</body>
+</html>

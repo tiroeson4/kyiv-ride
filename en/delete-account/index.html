@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'; script-src 'sha256-NTwPlOaDkMm/FcVszP5+WsoDRIleXfumCo/lz9QVnlg='; connect-src https://svsaysljosrrqbjaxlqv.supabase.co">
+<link rel="icon" href="data:,">
+<title>Delete account — Попутка. Таксі разом | Київ</title>
+<style>:root{color-scheme:light dark;--bg:#F6F6F1;--paper:#FFF;--ink:#173E38;--muted:#74817C;--line:#E3E8E2;--green:#235D4C;--pale:#E8F1E8;--danger:#AD5044;--on:#FFF}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--paper:#1E1E1E;--ink:#F1F1F1;--muted:#AAA;--line:#333;--green:#88D6B8;--pale:#282828;--danger:#EA998A;--on:#121212}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:26px;letter-spacing:-.5px;margin:12px 0 4px}h2{font-size:17px;margin:0 0 4px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
+.card>:first-child{margin-top:0}.card>:last-child{margin-bottom:0}
+.muted{color:var(--muted);font-size:13px}nav{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0}
+a{color:var(--green);font-weight:600}section+section{margin-top:14px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 6px}
+input{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:inherit}
+button{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:14px;font:600 15px system-ui,sans-serif;cursor:pointer;background:var(--green);color:var(--on)}
+button.secondary{background:var(--pale);color:var(--ink)}button.danger{background:var(--danger);color:var(--on)}button:disabled{opacity:.55;cursor:default}
+.error{color:var(--danger)}[hidden]{display:none!important}</style>
+</head>
+<body>
+<main>
+<header><strong>Попутка. Таксі разом | Київ</strong><a href="/kyiv-ride/delete-account/">Українська</a></header>
+<nav><a href="/kyiv-ride/en/">Support</a><a href="/kyiv-ride/en/privacy/">Privacy</a><a href="/kyiv-ride/en/terms/">Terms</a><a href="/kyiv-ride/en/delete-account/">Delete account</a></nav>
+<h1>Delete account</h1>
+<div class="card"><p>In the app: Profile → Settings → “Help &amp; data” → “Delete account”.</p><p>If you cannot sign in, email support from your account address with the subject “Account deletion”. We delete the account after checking that the request came from that address. <a href="mailto:tiroeson4@gmail.com">tiroeson4@gmail.com</a></p></div>
+<div class="card"><p>Your profile, photo, contacts, favorites, rides you created, and messages will be deleted. Your direct conversations will also disappear for the other participants. Active rides will be cancelled; you will leave other rides. Anonymous feedback without an account link may remain.</p>
+<p>Anonymised daily statistics counters without an account link are kept.</p>
+<p class="muted">Deleting your account does not cancel a store subscription. If you have one, cancel it in Google Play or the App Store to avoid another charge.</p></div>
+<div class="card" id="deletion">
+<noscript><p>Signing in on this page requires JavaScript. You can also email support.</p></noscript>
+<form id="login" hidden>
+<p>Without the app: sign in below with your account email and password, then confirm deletion.</p>
+<label for="email">Email</label><input id="email" type="email" autocomplete="username" required maxlength="254">
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required maxlength="128">
+<button type="submit">Sign in</button>
+
+</form>
+<div id="confirm" hidden>
+<p class="muted">Signed in: <span id="who"></span></p>
+<p>Your data and conversations cannot be restored. Delete your account?</p>
+<button type="button" class="danger" id="remove">Delete permanently</button>
+<button type="button" class="secondary" id="signout">Sign out</button>
+</div>
+<p id="status" role="status" aria-live="polite"></p>
+</div>
+<p class="muted">Андрій Офат · <a href="mailto:tiroeson4@gmail.com">tiroeson4@gmail.com</a></p>
+</main>
+<script>(()=>{const c={"url":"https://svsaysljosrrqbjaxlqv.supabase.co","key":"sb_publishable_r02QtHizBKFx479t2BNy4g_VLujt2au","messages":{"credentials":"Check your email and password and try again.","email":"Enter a valid email address.","unavailable":"Could not confirm the request. Check your connection and try again.","admin":"Transfer administrator access to another account first so the app keeps a moderator.","deleted":"Your account has been deleted.","deletionAccepted":"Request accepted. Account access is closed; the server is finishing data deletion. You do not need to send another request.","loading":"Loading…"},"redirect":"https://tiroeson4.github.io/kyiv-ride/en/delete-account/"};
+const $=(id)=>document.getElementById(id),login=$("login"),confirmBox=$("confirm"),status=$("status");
+let token="",requestId=crypto.randomUUID(),busy=false;
+const say=(key,error)=>{status.textContent=c.messages[key]||"";status.className=error?"error":""};
+const headers=(auth)=>({apikey:c.key,"Content-Type":"application/json",...(auth?{Authorization:"Bearer "+auth}:{})});
+async function show(access){const r=await fetch(c.url+"/auth/v1/user",{headers:headers(access)});if(!r.ok)throw 0;const user=await r.json();token=access;$("who").textContent=user.email||"";login.hidden=true;confirmBox.hidden=false;say("")}
+function reset(){token="";requestId=crypto.randomUUID();confirmBox.hidden=true;login.hidden=false}
+const hash=new URLSearchParams(location.hash.slice(1));
+if(location.hash)history.replaceState(null,"",location.pathname);
+if(hash.get("access_token"))show(hash.get("access_token")).catch(()=>{reset();say("unavailable",true)});else login.hidden=false;
+login.addEventListener("submit",async(e)=>{e.preventDefault();if(busy)return;const email=$("email").value.trim().toLowerCase(),password=$("password").value;
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return say("email",true);busy=true;say("loading");
+try{const r=await fetch(c.url+"/auth/v1/token?grant_type=password",{method:"POST",headers:headers(),body:JSON.stringify({email,password})});
+if(r.status===400||r.status===401){say("credentials",true);return}if(!r.ok)throw 0;const s=await r.json();$("password").value="";await show(s.access_token)}
+catch{say("unavailable",true)}finally{busy=false}});
+const google=$("google");if(google)google.addEventListener("click",()=>{location.assign(c.url+"/auth/v1/authorize?provider=google&redirect_to="+encodeURIComponent(c.redirect))});
+$("signout").addEventListener("click",()=>{const old=token;reset();say("");fetch(c.url+"/auth/v1/logout",{method:"POST",headers:headers(old)}).catch(()=>{})});
+$("remove").addEventListener("click",async()=>{if(busy||!token)return;busy=true;$("remove").disabled=true;say("loading");
+try{const r=await fetch(c.url+"/functions/v1/delete-account",{method:"POST",headers:headers(token),body:JSON.stringify({requestId})});
+const body=await r.json().catch(()=>({}));if(r.ok&&(body.code==="deleted"||body.code==="deletionAccepted")){token="";confirmBox.hidden=true;say(body.code);return}
+if(body.code==="login"){reset();say("credentials",true);return}say(body.code==="deletionAdmin"?"admin":"unavailable",true)}
+catch{say("unavailable",true)}finally{busy=false;$("remove").disabled=false}});})();</script>
+</body>
+</html>
